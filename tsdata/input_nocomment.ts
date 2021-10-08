@@ -1,23 +1,23 @@
 export enum Gender {
-  Male = "Male",
-  Female = "Female",
-  Unisex = "Unisex",
-  UNRECOGNIZED = "UNRECOGNIZED",
+  Male = 'Male',
+  Female = 'Female',
+  Unisex = 'Unisex',
+  UNRECOGNIZED = 'UNRECOGNIZED',
 }
 
-export function GenderFromJSON(object: any): Gender {
+export const GenderFromJSON = (object: any) => {
   switch (object) {
     case 1:
-    case "Male":
+    case 'Male':
       return Gender.Male;
     case 2:
-    case "Female":
+    case 'Female':
       return Gender.Female;
     case 3:
-    case "Unisex":
+    case 'Unisex':
       return Gender.Unisex;
     case -1:
-    case "UNRECOGNIZED":
+    case 'UNRECOGNIZED':
     default:
       return Gender.UNRECOGNIZED;
   }
