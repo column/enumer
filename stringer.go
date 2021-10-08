@@ -143,16 +143,11 @@ func main() {
 	}
 
 	if *ts != "" {
-		cur, err := os.Getwd()
-		if err != nil {
-			log.Fatal("failed to get current working directory")
-		}
-		outputName := filepath.Join(cur, *ts)
-		folder := filepath.Dir(outputName)
+		folder := filepath.Dir(*ts)
 		if e := os.MkdirAll(folder, os.ModePerm); e != nil {
 			log.Fatalf("failed to create folder: %s", folder)
 		}
-		g.dumpData(g.tsBuf.Bytes(), types[0], outputName)
+		g.dumpData(g.tsBuf.Bytes(), types[0], *ts)
 	}
 }
 
