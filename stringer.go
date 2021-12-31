@@ -385,6 +385,16 @@ func (g *Generator) generate(
 		log.Fatalf("no values defined for type %s", typeName)
 	}
 
+	g.trimValueNames(values, trimPrefix)
+
+	g.transformValueNames(values, transformMethod)
+
+	g.genTypeScriptCodes(typeName, values, lineComment)
+
+	if lineComment {
+		g.replaceValuesWithLineComment(values)
+	}
+
 	uniqueValues := sets.NewInt64()
 	uniqueNames := sets.NewString()
 	for _, value := range values {
@@ -397,16 +407,6 @@ func (g *Generator) generate(
 		}
 		uniqueValues.Insert(v)
 		uniqueNames.Insert(value.name)
-	}
-
-	g.trimValueNames(values, trimPrefix)
-
-	g.transformValueNames(values, transformMethod)
-
-	g.genTypeScriptCodes(typeName, values, lineComment)
-
-	if lineComment {
-		g.replaceValuesWithLineComment(values)
 	}
 
 	runs := splitIntoRuns(values)
