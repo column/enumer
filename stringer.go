@@ -75,6 +75,7 @@ func Usage() {
 }
 
 func main() {
+	fmt.Println("Column enumer version: 2021-12-30")
 	log.SetFlags(0)
 	log.SetPrefix("enumer: ")
 	flag.Usage = Usage
