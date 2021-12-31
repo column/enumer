@@ -33,5 +33,5 @@ func (g *Generator) genTypeScriptCodes(typeName string, values []Value, lineComm
 	fmt.Fprintf(&g.tsBuf, "    case 'UNRECOGNIZED':\n")
 	fmt.Fprintf(&g.tsBuf, "    default:\n")
 	fmt.Fprintf(&g.tsBuf, "      return %s.UNRECOGNIZED;\n", typeName)
-	fmt.Fprint(&g.tsBuf, "  }\n}\n")
+	fmt.Fprint(&g.tsBuf, "  }\n};\n")
 }
