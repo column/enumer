@@ -27,9 +27,9 @@ import (
 	"sort"
 	"strings"
 
-	"golang.org/x/tools/go/packages"
-
 	"github.com/pascaldekloe/name"
+	"golang.org/x/tools/go/packages"
+	"k8s.io/apimachinery/pkg/util/sets"
 )
 
 type arrayFlags []string
@@ -383,6 +383,20 @@ func (g *Generator) generate(
 
 	if len(values) == 0 {
 		log.Fatalf("no values defined for type %s", typeName)
+	}
+
+	uniqueValues := sets.NewInt64()
+	uniqueNames := sets.NewString()
+	for _, value := range values {
+		v := int64(value.value)
+		if uniqueValues.Has(v) {
+			panic(fmt.Sprintf("duplicated enum value: %s = %d", value.name, v))
+		}
+		if uniqueNames.Has(value.name) {
+			panic(fmt.Sprintf("duplicated enum name: %s", value.name))
+		}
+		uniqueValues.Insert(v)
+		uniqueNames.Insert(value.name)
 	}
 
 	g.trimValueNames(values, trimPrefix)

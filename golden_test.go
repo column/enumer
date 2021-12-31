@@ -401,7 +401,6 @@ const (
 	p3 Prime = 3
 	p5 Prime = 5
 	p7 Prime = 7
-	p77 Prime = 7 // Duplicate; note that p77 doesn't appear below.
 	p11 Prime = 11
 	p13 Prime = 13
 	p17 Prime = 17
@@ -484,7 +483,6 @@ const (
 	p3 Prime = 3
 	p5 Prime = 5
 	p7 Prime = 7
-	p77 Prime = 7 // Duplicate; note that p77 doesn't appear below.
 	p11 Prime = 11
 	p13 Prime = 13
 	p17 Prime = 17
@@ -585,7 +583,6 @@ const (
 	p3 Prime = 3
 	p5 Prime = 5
 	p7 Prime = 7
-	p77 Prime = 7 // Duplicate; note that p77 doesn't appear below.
 	p11 Prime = 11
 	p13 Prime = 13
 	p17 Prime = 17
@@ -681,7 +678,6 @@ const (
 	p3 Prime = 3
 	p5 Prime = 5
 	p7 Prime = 7
-	p77 Prime = 7 // Duplicate; note that p77 doesn't appear below.
 	p11 Prime = 11
 	p13 Prime = 13
 	p17 Prime = 17
@@ -782,7 +778,6 @@ const (
 	p3 Prime = 3
 	p5 Prime = 5
 	p7 Prime = 7
-	p77 Prime = 7 // Duplicate; note that p77 doesn't appear below.
 	p11 Prime = 11
 	p13 Prime = 13
 	p17 Prime = 17
@@ -894,7 +889,6 @@ const (
 	p3 Prime = 3
 	p5 Prime = 5
 	p7 Prime = 7
-	p77 Prime = 7 // Duplicate; note that p77 doesn't appear below.
 	p11 Prime = 11
 	p13 Prime = 13
 	p17 Prime = 17
@@ -1035,7 +1029,6 @@ const (
 	p3 Prime = 3
 	p5 Prime = 5
 	p7 Prime = 7
-	p77 Prime = 7 // Duplicate; note that p77 doesn't appear below.
 	p11 Prime = 11
 	p13 Prime = 13
 	p17 Prime = 17
