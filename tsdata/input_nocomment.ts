@@ -21,4 +21,4 @@ export const GenderFromJSON = (object: any) => {
     default:
       return Gender.UNRECOGNIZED;
   }
-}
+};

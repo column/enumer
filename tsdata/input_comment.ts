@@ -21,4 +21,4 @@ export const OwnerFromJSON = (object: any) => {
     default:
       return Owner.UNRECOGNIZED;
   }
-}
+};

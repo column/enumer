@@ -10,7 +10,7 @@ func %[1]sString(s string) (%[1]s, error) {
 	if val, ok := _%[1]sNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%%s does not belong to %[1]s values", s)
+	return 0, %[2]s
 }
 `
 
@@ -44,7 +44,7 @@ func (i %[1]s) IsA%[1]s() bool {
 }
 `
 
-func (g *Generator) buildBasicExtras(runs [][]Value, typeName string, runsThreshold int) {
+func (g *Generator) buildBasicExtras(runs [][]Value, typeName string, runsThreshold int, parseError string) {
 	// At this moment, either "g.declareIndexAndNameVars()" or "g.declareNameVars()" has been called
 
 	// Print the slice of values
@@ -77,7 +77,11 @@ func (g *Generator) buildBasicExtras(runs [][]Value, typeName string, runsThresh
 	g.Printf("}\n\n")
 
 	// Print the basic extra methods
-	g.Printf(stringNameToValueMethod, typeName)
+	errString := fmt.Sprintf(`fmt.Errorf("%%s does not belong to %s values", s)`, typeName)
+	if parseError != "" {
+		errString = fmt.Sprintf(`apierrors.%s.AddDetail("invalid_value", s)`, parseError)
+	}
+	g.Printf(stringNameToValueMethod, typeName, errString)
 	g.Printf(stringValuesMethod, typeName)
 	if len(runs) <= runsThreshold {
 		g.Printf(stringBelongsMethodLoop, typeName)

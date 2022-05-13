@@ -42,6 +42,6 @@ func TestTypeScript(t *testing.T) {
 		output := filepath.Join(dir, "tsdata", testcase.output)
 		expected, err := ioutil.ReadFile(output)
 		require.NoError(t, err)
-		assert.Equal(t, expected, g.tsBuf.Bytes())
+		assert.Equal(t, string(expected), g.tsBuf.String())
 	}
 }
