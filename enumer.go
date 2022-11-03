@@ -122,7 +122,7 @@ func (i *%[1]s) UnmarshalXMLAttr(attr xml.Attr) error {
 	if err != nil {
 		return err
 	}
-	*cc = v
+	*i = v
 	return nil
 }
 
@@ -145,7 +145,7 @@ func (i *%[1]s) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
 	if err != nil {
 		return err
 	}
-	*cc = v
+	*i = v
 	return nil
 }
 
