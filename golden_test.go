@@ -105,7 +105,7 @@ func DayString(s string) (Day, error) {
 	if val, ok := _DayNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Day values", s)
+	return 0, errors.Newf("%s does not belong to Day values", s)
 }
 
 // DayValues returns all values of the enum
@@ -163,7 +163,7 @@ func NumberString(s string) (Number, error) {
 	if val, ok := _NumberNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Number values", s)
+	return 0, errors.Newf("%s does not belong to Number values", s)
 }
 
 // NumberValues returns all values of the enum
@@ -243,7 +243,7 @@ func GapString(s string) (Gap, error) {
 	if val, ok := _GapNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Gap values", s)
+	return 0, errors.Newf("%s does not belong to Gap values", s)
 }
 
 // GapValues returns all values of the enum
@@ -302,7 +302,7 @@ func NumString(s string) (Num, error) {
 	if val, ok := _NumNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Num values", s)
+	return 0, errors.Newf("%s does not belong to Num values", s)
 }
 
 // NumValues returns all values of the enum
@@ -374,7 +374,7 @@ func UnumString(s string) (Unum, error) {
 	if val, ok := _UnumNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Unum values", s)
+	return 0, errors.Newf("%s does not belong to Unum values", s)
 }
 
 // UnumValues returns all values of the enum
@@ -463,7 +463,7 @@ func PrimeString(s string) (Prime, error) {
 	if val, ok := _PrimeNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Prime values", s)
+	return 0, errors.Newf("%s does not belong to Prime values", s)
 }
 
 // PrimeValues returns all values of the enum
@@ -545,7 +545,7 @@ func PrimeString(s string) (Prime, error) {
 	if val, ok := _PrimeNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Prime values", s)
+	return 0, errors.Newf("%s does not belong to Prime values", s)
 }
 
 // PrimeValues returns all values of the enum
@@ -568,7 +568,7 @@ func (i Prime) MarshalJSON() ([]byte, error) {
 func (i *Prime) UnmarshalJSON(data []byte) error {
 	var s string
 	if err := json.Unmarshal(data, &s); err != nil {
-		return fmt.Errorf("Prime should be a string, got %s", data)
+		return errors.Newf("Prime should be a string, got %s", data)
 	}
 
 	var err error
@@ -645,7 +645,7 @@ func PrimeString(s string) (Prime, error) {
 	if val, ok := _PrimeNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Prime values", s)
+	return 0, errors.Newf("%s does not belong to Prime values", s)
 }
 
 // PrimeValues returns all values of the enum
@@ -740,7 +740,7 @@ func PrimeString(s string) (Prime, error) {
 	if val, ok := _PrimeNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Prime values", s)
+	return 0, errors.Newf("%s does not belong to Prime values", s)
 }
 
 // PrimeValues returns all values of the enum
@@ -840,7 +840,7 @@ func PrimeString(s string) (Prime, error) {
 	if val, ok := _PrimeNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Prime values", s)
+	return 0, errors.Newf("%s does not belong to Prime values", s)
 }
 
 // PrimeValues returns all values of the enum
@@ -867,7 +867,7 @@ func (i *Prime) Scan(value interface{}) error {
 	if !ok {
 		bytes, ok := value.([]byte)
 		if !ok {
-			return fmt.Errorf("value is not a byte slice")
+			return errors.Newf("value is not a byte slice")
 		}
 
 		str = string(bytes[:])
@@ -951,7 +951,7 @@ func PrimeString(s string) (Prime, error) {
 	if val, ok := _PrimeNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Prime values", s)
+	return 0, errors.Newf("%s does not belong to Prime values", s)
 }
 
 // PrimeValues returns all values of the enum
@@ -974,7 +974,7 @@ func (i Prime) MarshalJSON() ([]byte, error) {
 func (i *Prime) UnmarshalJSON(data []byte) error {
 	var s string
 	if err := json.Unmarshal(data, &s); err != nil {
-		return fmt.Errorf("Prime should be a string, got %s", data)
+		return errors.Newf("Prime should be a string, got %s", data)
 	}
 
 	var err error
@@ -995,7 +995,7 @@ func (i *Prime) Scan(value interface{}) error {
 	if !ok {
 		bytes, ok := value.([]byte)
 		if !ok {
-			return fmt.Errorf("value is not a byte slice")
+			return errors.Newf("value is not a byte slice")
 		}
 
 		str = string(bytes[:])
@@ -1129,7 +1129,7 @@ func PrimeString(s string) (Prime, error) {
 	if val, ok := _PrimeNameToValueMap[s]; ok {
 		return val, nil
 	}
-	return 0, fmt.Errorf("%s does not belong to Prime values", s)
+	return 0, errors.Newf("%s does not belong to Prime values", s)
 }
 
 // PrimeValues returns all values of the enum

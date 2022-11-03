@@ -16,7 +16,7 @@ const scanMethod = `func (i *%[1]s) Scan(value interface{}) error {
 	if !ok {
 		bytes, ok := value.([]byte)
 		if !ok {
-			return fmt.Errorf("value is not a byte slice")
+			return errors.Newf("value is not a byte slice")
 		}
 
 		str = string(bytes[:])

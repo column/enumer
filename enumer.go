@@ -77,7 +77,7 @@ func (g *Generator) buildBasicExtras(runs [][]Value, typeName string, runsThresh
 	g.Printf("}\n\n")
 
 	// Print the basic extra methods
-	errString := fmt.Sprintf(`fmt.Errorf("%%s does not belong to %s values", s)`, typeName)
+	errString := fmt.Sprintf(`errors.Newf("%%s does not belong to %s values", s)`, typeName)
 	if parseError != "" {
 		errString = fmt.Sprintf(`apierrors.%s.AddDetail("invalid_value", s)`, parseError)
 	}
@@ -102,7 +102,7 @@ func (i %[1]s) MarshalJSON() ([]byte, error) {
 func (i *%[1]s) UnmarshalJSON(data []byte) error {
 	var s string
 	if err := json.Unmarshal(data, &s); err != nil {
-		return fmt.Errorf("%[1]s should be a string, got %%s", data)
+		return errors.Newf("%[1]s should be a string, got %%s", data)
 	}
 
 	var err error
