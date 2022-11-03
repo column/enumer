@@ -159,3 +159,39 @@ func (i *%[1]s) UnmarshalYAML(unmarshal func(interface{}) error) error {
 func (g *Generator) buildYAMLMethods(runs [][]Value, typeName string, runsThreshold int) {
 	g.Printf(yamlMethods, typeName)
 }
+
+/*
+func (cc *CurrencyCode) UnmarshalXMLAttr(attr xml.Attr) error {
+	v, err := CurrencyCodeString(strings.ToUpper(attr.Value))
+	if err != nil {
+		return err
+	}
+	*cc = v
+	return nil
+}
+
+func (cc CurrencyCode) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	attr := xml.Attr{
+		Name:  name,
+		Value: cc.String(),
+	}
+	return attr, nil
+}
+
+func (cc *CurrencyCode) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	var s string
+	if err := d.DecodeElement(&s, &start); err != nil {
+		return err
+	}
+	v, err := CurrencyCodeString(strings.ToUpper(s))
+	if err != nil {
+		return err
+	}
+	*cc = v
+	return nil
+}
+
+func (cc CurrencyCode) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return e.EncodeElement(cc.String(), start)
+}
+*/

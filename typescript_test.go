@@ -37,7 +37,7 @@ func TestTypeScript(t *testing.T) {
 		var g Generator
 		fullPath := filepath.Join(dir, "tsdata", testcase.input)
 		g.parsePackage([]string{fullPath})
-		g.generate(testcase.typeName, true, true, true, true, "noop", "", testcase.hasComment)
+		g.generate(testcase.typeName, true, true, "noop", "", testcase.hasComment)
 
 		output := filepath.Join(dir, "tsdata", testcase.output)
 		expected, err := ioutil.ReadFile(output)
