@@ -430,14 +430,15 @@ func (g *Generator) generate(
 	}
 
 	g.buildBasicExtras(runs, typeName, runsThreshold, *parseError)
-	g.buildJSONMethods(runs, typeName, runsThreshold)
+	g.buildJSONMethods(runs, typeName)
 	if includeText {
-		g.buildTextMethods(runs, typeName, runsThreshold)
+		g.buildTextMethods(runs, typeName)
 	}
 	if includeYAML {
-		g.buildYAMLMethods(runs, typeName, runsThreshold)
+		g.buildYAMLMethods(runs, typeName)
 	}
 	g.addValueAndScanMethod(typeName)
+	g.buildXMLMethods(runs, typeName)
 }
 
 // splitIntoRuns breaks the values into runs of contiguous sequences.
