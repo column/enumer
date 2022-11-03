@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+//go:build go1.5
 // +build go1.5
 
 //Enumer is a tool to generate Go code that adds useful methods to Go enums (constants with a specific type).
@@ -45,17 +46,14 @@ func (af *arrayFlags) Set(value string) error {
 
 var (
 	typeNames       = flag.String("type", "", "comma-separated list of type names; must be set")
-	sql             = flag.Bool("sql", false, "if true, the Scanner and Valuer interface will be implemented.")
-	json            = flag.Bool("json", false, "if true, json marshaling methods will be generated. Default: false")
 	yaml            = flag.Bool("yaml", false, "if true, yaml marshaling methods will be generated. Default: false")
 	text            = flag.Bool("text", false, "if true, text marshaling methods will be generated. Default: false")
 	output          = flag.String("output", "", "output file name; default srcdir/<type>_enumer.go")
 	transformMethod = flag.String("transform", "noop", "enum item name transformation method. Default: noop")
 	trimPrefix      = flag.String("trimprefix", "", "transform each item name by removing a prefix. Default: \"\"")
 	lineComment     = flag.Bool("linecomment", false, "use line comment text as printed text when present")
-	ts              = flag.String("ts", "", "output file name of TypeScript codes; must be set")
+	ts              = flag.String("ts", "", "output file name of TypeScript codes; Default: \"\"")
 	parseError      = flag.String("parseError", "", "returned error if it failed to parse a string as the enum")
-	nogo            = flag.Bool("nogo", false, "if true, no Go codes will be generated")
 )
 
 var comments arrayFlags
@@ -117,12 +115,9 @@ func main() {
 	g.Printf("\n")
 	g.Printf("import (\n")
 	g.Printf("\t\"fmt\"\n")
-	if *sql {
-		g.Printf("\t\"database/sql/driver\"\n")
-	}
-	if *json {
-		g.Printf("\t\"encoding/json\"\n")
-	}
+	g.Printf("\t\"database/sql/driver\"\n")
+	g.Printf("\t\"encoding/json\"\n")
+	g.Printf("\t\"encoding/xml\"\n")
 	if *parseError != "" {
 		g.Printf("\n\tapierrors \"column/pkg/errors\"\n")
 	}
@@ -132,21 +127,19 @@ func main() {
 
 	// Run generate for each type.
 	for _, typeName := range types {
-		g.generate(typeName, *json, *yaml, *sql, *text, *transformMethod, *trimPrefix, *lineComment)
+		g.generate(typeName, *yaml, *text, *transformMethod, *trimPrefix, *lineComment)
 	}
 
-	if !*nogo {
-		// Format the output.
-		src := g.format()
+	// Format the output.
+	src := g.format()
 
-		// Figure out filename to write to
-		outputName := *output
-		if outputName == "" {
-			baseName := fmt.Sprintf("%s_enumer.go", types[0])
-			outputName = filepath.Join(dir, strings.ToLower(baseName))
-		}
-		g.dumpData(src, types[0], outputName)
+	// Figure out filename to write to
+	outputName := *output
+	if outputName == "" {
+		baseName := fmt.Sprintf("%s_enumer.go", types[0])
+		outputName = filepath.Join(dir, strings.ToLower(baseName))
 	}
+	g.dumpData(src, types[0], outputName)
 
 	if *ts != "" {
 		folder := filepath.Dir(*ts)
@@ -368,9 +361,7 @@ func (g *Generator) replaceValuesWithLineComment(values []Value) {
 // generate produces the String method for the named type.
 func (g *Generator) generate(
 	typeName string,
-	includeJSON,
 	includeYAML,
-	includeSQL,
 	includeText bool,
 	transformMethod string,
 	trimPrefix string,
@@ -439,18 +430,15 @@ func (g *Generator) generate(
 	}
 
 	g.buildBasicExtras(runs, typeName, runsThreshold, *parseError)
-	if includeJSON {
-		g.buildJSONMethods(runs, typeName, runsThreshold)
-	}
+	g.buildJSONMethods(runs, typeName)
 	if includeText {
-		g.buildTextMethods(runs, typeName, runsThreshold)
+		g.buildTextMethods(runs, typeName)
 	}
 	if includeYAML {
-		g.buildYAMLMethods(runs, typeName, runsThreshold)
+		g.buildYAMLMethods(runs, typeName)
 	}
-	if includeSQL {
-		g.addValueAndScanMethod(typeName)
-	}
+	g.addValueAndScanMethod(typeName)
+	g.buildXMLMethods(runs, typeName)
 }
 
 // splitIntoRuns breaks the values into runs of contiguous sequences.

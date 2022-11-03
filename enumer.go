@@ -111,8 +111,52 @@ func (i *%[1]s) UnmarshalJSON(data []byte) error {
 }
 `
 
-func (g *Generator) buildJSONMethods(runs [][]Value, typeName string, runsThreshold int) {
+func (g *Generator) buildJSONMethods(runs [][]Value, typeName string) {
 	g.Printf(jsonMethods, typeName)
+}
+
+const xmlMethods = `
+// UnmarshalXMLAttr implements xml.UnmarshalerAttr interface for %[1]s
+func (i *%[1]s) UnmarshalXMLAttr(attr xml.Attr) error {
+	v, err := %[1]sString(attr.Value)
+	if err != nil {
+		return err
+	}
+	*cc = v
+	return nil
+}
+
+// MarshalXMLAttr implements xml.MarshalerAttr interface for %[1]s
+func (i %[1]s) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
+	attr := xml.Attr{
+		Name:  name,
+		Value: i.String(),
+	}
+	return attr, nil
+}
+
+// UnmarshalXML implements xml.Unmarshaler interface for %[1]s
+func (i *%[1]s) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	var s string
+	if err := d.DecodeElement(&s, &start); err != nil {
+		return err
+	}
+	v, err := %[1]sString(s)
+	if err != nil {
+		return err
+	}
+	*cc = v
+	return nil
+}
+
+// MarshalXML implements xml.Marshaler interface for %[1]s
+func (i %[1]s) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	return e.EncodeElement(i.String(), start)
+}
+`
+
+func (g *Generator) buildXMLMethods(runs [][]Value, typeName string) {
+	g.Printf(xmlMethods, typeName)
 }
 
 // Arguments to format are:
@@ -131,7 +175,7 @@ func (i *%[1]s) UnmarshalText(text []byte) error {
 }
 `
 
-func (g *Generator) buildTextMethods(runs [][]Value, typeName string, runsThreshold int) {
+func (g *Generator) buildTextMethods(runs [][]Value, typeName string) {
 	g.Printf(textMethods, typeName)
 }
 
@@ -156,6 +200,6 @@ func (i *%[1]s) UnmarshalYAML(unmarshal func(interface{}) error) error {
 }
 `
 
-func (g *Generator) buildYAMLMethods(runs [][]Value, typeName string, runsThreshold int) {
+func (g *Generator) buildYAMLMethods(runs [][]Value, typeName string) {
 	g.Printf(yamlMethods, typeName)
 }
