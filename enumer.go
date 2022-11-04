@@ -96,6 +96,9 @@ func (g *Generator) buildBasicExtras(runs [][]Value, typeName string, runsThresh
 const jsonMethods = `
 // MarshalJSON implements the json.Marshaler interface for %[1]s
 func (i %[1]s) MarshalJSON() ([]byte, error) {
+	if !i.IsA%[1]s() {
+		return nil, nil
+	}
 	return json.Marshal(i.String())
 }
 

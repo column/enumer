@@ -970,6 +970,9 @@ func (i Prime) IsAPrime() bool {
 
 // MarshalJSON implements the json.Marshaler interface for Prime
 func (i Prime) MarshalJSON() ([]byte, error) {
+	if !i.IsAPrime() {
+		return nil, nil
+	}
 	return json.Marshal(i.String())
 }
 
