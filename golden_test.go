@@ -15,6 +15,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 // Golden represents a test case.
@@ -948,6 +950,7 @@ var _PrimeNameToValueMap = map[string]Prime{
 // PrimeString retrieves an enum value from the enum constants string name.
 // Throws an error if the param is not part of the enum.
 func PrimeString(s string) (Prime, error) {
+	s = strings.TrimSpace(s)
 	if val, ok := _PrimeNameToValueMap[s]; ok {
 		return val, nil
 	}
@@ -983,6 +986,9 @@ func (i *Prime) UnmarshalJSON(data []byte) error {
 }
 
 func (i Prime) Value() (driver.Value, error) {
+	if !i.IsAPrime() {
+		return nil, nil
+	}
 	return i.String(), nil
 }
 
@@ -1191,7 +1197,5 @@ func runGoldenTest(t *testing.T, test Golden, generateYAML, generateText bool, p
 	}
 	g.generate(tokens[1], generateYAML, generateText, "noop", prefix, false)
 	got := string(g.format())
-	if got != test.output {
-		t.Errorf("%s: got\n====\n%s====\nexpected\n====%s", test.name, got, test.output)
-	}
+	assert.Equal(t, test.output, got, test.name)
 }

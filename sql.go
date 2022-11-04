@@ -3,6 +3,9 @@ package main
 // Arguments to format are:
 //	[1]: type name
 const valueMethod = `func (i %[1]s) Value() (driver.Value, error) {
+	if !i.IsA%[1]s() {
+		return nil, nil
+	}
 	return i.String(), nil
 }
 `

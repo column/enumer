@@ -111,6 +111,7 @@ func main() {
 	g.Printf("\t\"database/sql/driver\"\n")
 	g.Printf("\t\"encoding/json\"\n")
 	g.Printf("\t\"encoding/xml\"\n")
+	g.Printf("\t\"strings\"\n")
 	if *parseError != "" {
 		g.Printf("\n\tapierrors \"column/pkg/errors\"\n")
 	}
