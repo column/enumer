@@ -146,7 +146,7 @@ var _NumberIndex = [...]uint8{0, 3, 6, 11}
 func (i Number) String() string {
 	i -= 1
 	if i < 0 || i >= Number(len(_NumberIndex)-1) {
-		return fmt.Sprintf("Number(%d)", i+1)
+		return ""
 	}
 	return _NumberName[_NumberIndex[i]:_NumberIndex[i+1]]
 }
@@ -438,7 +438,7 @@ func (i Prime) String() string {
 	if str, ok := _PrimeMap[i]; ok {
 		return str
 	}
-	return fmt.Sprintf("Prime(%d)", i)
+	return ""
 }
 
 var _PrimeValues = []Prime{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43}
@@ -520,7 +520,7 @@ func (i Prime) String() string {
 	if str, ok := _PrimeMap[i]; ok {
 		return str
 	}
-	return fmt.Sprintf("Prime(%d)", i)
+	return ""
 }
 
 var _PrimeValues = []Prime{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43}
@@ -620,7 +620,7 @@ func (i Prime) String() string {
 	if str, ok := _PrimeMap[i]; ok {
 		return str
 	}
-	return fmt.Sprintf("Prime(%d)", i)
+	return ""
 }
 
 var _PrimeValues = []Prime{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43}
@@ -715,7 +715,7 @@ func (i Prime) String() string {
 	if str, ok := _PrimeMap[i]; ok {
 		return str
 	}
-	return fmt.Sprintf("Prime(%d)", i)
+	return ""
 }
 
 var _PrimeValues = []Prime{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43}
@@ -815,7 +815,7 @@ func (i Prime) String() string {
 	if str, ok := _PrimeMap[i]; ok {
 		return str
 	}
-	return fmt.Sprintf("Prime(%d)", i)
+	return ""
 }
 
 var _PrimeValues = []Prime{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43}
@@ -926,7 +926,7 @@ func (i Prime) String() string {
 	if str, ok := _PrimeMap[i]; ok {
 		return str
 	}
-	return fmt.Sprintf("Prime(%d)", i)
+	return ""
 }
 
 var _PrimeValues = []Prime{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43}
@@ -1111,7 +1111,7 @@ func (i Prime) String() string {
 	if str, ok := _PrimeMap[i]; ok {
 		return str
 	}
-	return fmt.Sprintf("Prime(%d)", i)
+	return ""
 }
 
 var _PrimeValues = []Prime{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 41, 43}

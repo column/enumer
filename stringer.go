@@ -696,7 +696,7 @@ func (g *Generator) buildOneRun(runs [][]Value, typeName string) {
 //	[3]: less than zero check (for signed types)
 const stringOneRun = `func (i %[1]s) String() string {
 	if %[3]si >= %[1]s(len(_%[1]sIndex)-1) {
-		return fmt.Sprintf("%[1]s(%%d)", i)
+		return ""
 	}
 	return _%[1]sName[_%[1]sIndex[i]:_%[1]sIndex[i+1]]
 }
@@ -712,7 +712,7 @@ const stringOneRun = `func (i %[1]s) String() string {
 const stringOneRunWithOffset = `func (i %[1]s) String() string {
 	i -= %[2]s
 	if %[4]si >= %[1]s(len(_%[1]sIndex)-1) {
-		return fmt.Sprintf("%[1]s(%%d)", i + %[2]s)
+		return ""
 	}
 	return _%[1]sName[_%[1]sIndex[i] : _%[1]sIndex[i+1]]
 }
@@ -739,7 +739,7 @@ func (g *Generator) buildMultipleRuns(runs [][]Value, typeName string) {
 			typeName, i, typeName, i, typeName, i)
 	}
 	g.Printf("\tdefault:\n")
-	g.Printf("\t\treturn fmt.Sprintf(\"%s(%%d)\", i)\n", typeName)
+	g.Printf("\t\treturn \"\"\n")
 	g.Printf("\t}\n")
 	g.Printf("}\n")
 }
@@ -766,6 +766,6 @@ const stringMap = `func (i %[1]s) String() string {
 	if str, ok := _%[1]sMap[i]; ok {
 		return str
 	}
-	return fmt.Sprintf("%[1]s(%%d)", i)
+	return ""
 }
 `
