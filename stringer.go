@@ -107,7 +107,6 @@ func main() {
 	g.Printf("package %s", g.pkg.name)
 	g.Printf("\n")
 	g.Printf("import (\n")
-	g.Printf("\t\"fmt\"\n")
 	g.Printf("\t\"database/sql/driver\"\n")
 	g.Printf("\t\"encoding/json\"\n")
 	g.Printf("\t\"encoding/xml\"\n")
