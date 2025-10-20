@@ -5,10 +5,10 @@
 //go:build go1.5
 // +build go1.5
 
-//Enumer is a tool to generate Go code that adds useful methods to Go enums (constants with a specific type).
-//It started as a fork of Rob Pike’s Stringer tool
+// Enumer is a tool to generate Go code that adds useful methods to Go enums (constants with a specific type).
+// It started as a fork of Rob Pike’s Stringer tool
 //
-//Please visit http://github.com/alvaroloes/enumer for a comprehensive documentation
+// Please visit http://github.com/alvaroloes/enumer for a comprehensive documentation
 package main
 
 import (
@@ -54,6 +54,7 @@ var (
 	lineComment     = flag.Bool("linecomment", false, "use line comment text as printed text when present")
 	ts              = flag.String("ts", "", "output file name of TypeScript codes; Default: \"\"")
 	parseError      = flag.String("parseError", "", "returned error if it failed to parse a string as the enum")
+	errorImport     = flag.String("errorImport", "", "error package import in format alias=path (e.g., apierrors=column/pkg/errors). Default: apierrors=column/pkg/errors")
 )
 
 // Usage is a replacement usage function for the flags package.
@@ -99,6 +100,27 @@ func main() {
 
 	g.parsePackage(args)
 
+	// Parse error import settings
+	var errorAlias, errorPath string
+	if *parseError != "" {
+		// Default values
+		errorAlias = "apierrors"
+		errorPath = "column/pkg/errors"
+
+		// Parse custom errorImport if provided
+		if *errorImport != "" {
+			parts := strings.SplitN(*errorImport, "=", 2)
+			if len(parts) != 2 {
+				log.Fatalf("errorImport must be in format alias=path (e.g., apierrors=column/pkg/errors)")
+			}
+			errorAlias = strings.TrimSpace(parts[0])
+			errorPath = strings.TrimSpace(parts[1])
+			if errorAlias == "" || errorPath == "" {
+				log.Fatalf("errorImport alias and path cannot be empty")
+			}
+		}
+	}
+
 	fmt.Printf("enumer version: 2022-11-03. enumer %s\n", strings.Join(os.Args[1:], " "))
 
 	// Print the header and package clause.
@@ -112,7 +134,7 @@ func main() {
 	g.Printf("\t\"encoding/xml\"\n")
 	g.Printf("\t\"strings\"\n")
 	if *parseError != "" {
-		g.Printf("\n\tapierrors \"column/pkg/errors\"\n")
+		g.Printf("\n\t%s %q\n", errorAlias, errorPath)
 	}
 	g.Printf("\n\t\"github.com/cockroachdb/errors\"\n")
 	g.Printf(")\n")
@@ -121,7 +143,7 @@ func main() {
 
 	// Run generate for each type.
 	for _, typeName := range types {
-		g.generate(typeName, *yaml, *text, *transformMethod, *trimPrefix, *lineComment)
+		g.generate(typeName, *yaml, *text, *transformMethod, *trimPrefix, *lineComment, errorAlias)
 	}
 
 	// Format the output.
@@ -360,6 +382,7 @@ func (g *Generator) generate(
 	transformMethod string,
 	trimPrefix string,
 	lineComment bool,
+	errorAlias string,
 ) {
 	values := make([]Value, 0, 100)
 	for _, file := range g.pkg.files {
@@ -423,7 +446,7 @@ func (g *Generator) generate(
 		g.buildMap(runs, typeName)
 	}
 
-	g.buildBasicExtras(runs, typeName, runsThreshold, *parseError)
+	g.buildBasicExtras(runs, typeName, runsThreshold, *parseError, errorAlias)
 	g.buildJSONMethods(runs, typeName)
 	if includeText {
 		g.buildTextMethods(runs, typeName)
@@ -690,6 +713,7 @@ func (g *Generator) buildOneRun(runs [][]Value, typeName string) {
 }
 
 // Arguments to format are:
+//
 //	[1]: type name
 //	[2]: size of index element (8 for uint8 etc.)
 //	[3]: less than zero check (for signed types)

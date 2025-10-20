@@ -1198,7 +1198,7 @@ func runGoldenTest(t *testing.T, test Golden, generateYAML, generateText bool, p
 	if len(tokens) != 3 {
 		t.Fatalf("%s: need type declaration on first line", test.name)
 	}
-	g.generate(tokens[1], generateYAML, generateText, "noop", prefix, false)
+	g.generate(tokens[1], generateYAML, generateText, "noop", prefix, false, "")
 	got := string(g.format())
 	assert.Equal(t, test.output, got, test.name)
 }
