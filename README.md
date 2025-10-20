@@ -145,6 +145,32 @@ The default value for `transform` flag is `noop` which means no transformation w
 If a prefix is provided via the `trimprefix` flag, it will be trimmed from the start of each name (before
 it is transformed). If a name doesn't have the prefix it will be passed unchanged.
 
+### Custom error handling
+
+Two flags are available for custom error handling:
+
+* `parseError`: Specifies the error constant name to return when parsing fails. When this flag is set, instead of returning a generic error, the generated code will use a custom error from your error package.
+
+* `errorImport`: Specifies the error package import path and alias in the format `alias=path` (e.g., `apierrors=column/pkg/errors`). This is used in conjunction with `parseError` to import and use your custom error package. If `parseError` is set but `errorImport` is not provided, it defaults to `apierrors=column/pkg/errors`.
+
+Example usage:
+```bash
+enumer -type=Status -parseError=ErrInvalidStatus -errorImport=apierrors=column/pkg/errors
+```
+
+This will generate code like:
+```go
+import (
+    apierrors "column/pkg/errors"
+    // ... other imports
+)
+
+func StatusString(s string) (Status, error) {
+    // ...
+    return 0, apierrors.ErrInvalidStatus.AddDetail("invalid_value", s)
+}
+```
+
 ## Inspiring projects
 * [Stringer](https://godoc.org/golang.org/x/tools/cmd/stringer)
 * [jsonenums](https://github.com/campoy/jsonenums)
