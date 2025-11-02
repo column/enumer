@@ -1,4 +1,4 @@
-# Enumer [![GoDoc](https://godoc.org/github.com/alvaroloes/enumer?status.svg)](https://godoc.org/github.com/alvaroloes/enumer) [![Go Report Card](https://goreportcard.com/badge/github.com/alvaroloes/enumer)](https://goreportcard.com/report/github.com/alvaroloes/enumer) [![cover.run go](https://cover.run/go/github.com/alvaroloes/enumer.svg?tag=golang-1.10)](https://cover.run/go/github.com/alvaroloes/enumer?tag=golang-1.10)
+# Enumer [![GoDoc](https://godoc.org/github.com/alvaroloes/enumer?status.svg)](https://godoc.org/github.com/alvaroloes/enumer) [![Go Report Card](https://goreportcard.com/badge/github.com/alvaroloes/enumer)](https://goreportcard.com/report/github.com/alvaroloes/enumer)
 Enumer is a tool to generate Go code that adds useful methods to Go enums (constants with a specific type).
 It started as a fork of [Rob Pike’s Stringer tool](https://godoc.org/golang.org/x/tools/cmd/stringer).
 
@@ -6,7 +6,7 @@ It started as a fork of [Rob Pike’s Stringer tool](https://godoc.org/golang.or
 Enumer can be installed as any other go command:
 
 ```
-go get github.com/alvaroloes/enumer
+go get github.com/column/enumer
 ```
 After that, the `enumer` executable will be in "$GOPATH/bin" folder and you can use it with `go generate`
 
